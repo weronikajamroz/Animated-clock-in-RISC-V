@@ -65,10 +65,11 @@ start:	la	a0, msg
 	blt	t1, t4, halt
 	blt	t2, t4, halt
 	blt	t3, t4, halt
-	li	t4, 57
+	li	t4, 53
 	bgt	t0, t4, halt
-	bgt	t1, t4, halt
 	bgt	t2, t4, halt
+	li	t4, 57
+	bgt	t1, t4, halt
 	bgt	t3, t4, halt
 	
 # convert from ASCII
@@ -103,7 +104,7 @@ loop:	li	a0, 1000
 	
 # counters - done
 inc_t3:	addi	t3, t3, 1
-	addi	t6, t5, 80	# wyświetlenie t3
+	addi	t6, t5, 80	# print t3
 	jal	ra, clean
 	addi	t6, t5, 80
 	mv	s6, t3
@@ -113,13 +114,13 @@ inc_t3:	addi	t3, t3, 1
 inc_t2:	mv	t3, zero
 	addi	t2, t2, 1
 	
-	addi	t6, t5, 80	# wyświetlenie t3
+	addi	t6, t5, 80	# print t3
 	jal	ra, clean
 	addi	t6, t5, 80	
 	mv	s6, t3
 	jal	ra, case
 	
-	addi	t6, t5, 56	# wyświetlenie t2
+	addi	t6, t5, 56	# print t2
 	jal	ra, clean
 	addi	t6, t5, 56
 	mv	s6, t2
@@ -130,13 +131,13 @@ inc_t2:	mv	t3, zero
 inc_t1:	mv	t2, zero
 	addi	t1, t1, 1
 	
-	addi	t6, t5, 56	# wyświetlenie t2
+	addi	t6, t5, 56	# print t2
 	jal	ra, clean
 	addi	t6, t5, 56
 	mv	s6, t2
 	jal	ra, case
 	
-	addi	t6, t5, 24	# wyświetlenie t1
+	addi	t6, t5, 24	# print t1
 	jal	ra, clean
 	addi	t6, t5, 24
 	mv	s6, t1
@@ -147,13 +148,22 @@ inc_t1:	mv	t2, zero
 inc_t0:	mv	t1, zero
 	addi	t0, t0, 1
 	
-	addi	t6, t5, 24	# wyświetlenie t1
+	addi	t6, t5, 24	# print t1
 	jal	ra, clean
 	addi	t6, t5, 24
 	mv	s6, t1
 	jal	ra, case
 	
-	mv	t6, t5		# wyświetlenie t0
+	mv	t6, t5		# print t0
+	jal	ra, clean
+	mv	t6, t5
+	mv	s6, t0
+	jal	ra, case
+	
+	bne	t0, s2, loop
+	
+	mv	t0, zero	# print t0
+	mv	t6, t5
 	jal	ra, clean
 	mv	t6, t5
 	mv	s6, t0
